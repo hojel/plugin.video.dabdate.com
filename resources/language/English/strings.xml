@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+  <string id="30000">Login name</string>
+  <string id="30001">Password</string>
+  <string id="30100">Quality</string>
+  <string id="30101">Local server</string>
+  <string id="30102">Download directory</string>
+  <string id="30200">Previous Page</string>
+  <string id="30201">Next Page</string>
+  <string id="30202">Login required</string>
+  <string id="30203">Need to set up Login information to watch premium contents.</string>
+  <string id="30204">Download</string>
+  <string id="31000">Medium</string>
+  <string id="31001">Low</string>
+  <string id="31002">High</string>
+  <string id="31003">Mobile</string>
+  <string id="31010">Australia/Asia</string>
+  <string id="31011">Europe/Middle Asia/India</string>
+  <string id="31012">South America</string>
+  <string id="31013">LA</string>
+  <string id="31014">NY</string>
+</strings>

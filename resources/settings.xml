@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+  <setting id="id" label="30000" type="text" default="" />
+  <setting id="pass" label="30001" type="text" option="hidden" default="" />
+  <setting id="quality" label="30100" type="labelenum" lvalues="31000|31001" default="" />
+  <setting id="local" label="30101" type="labelenum" lvalues="31010|31011|31012|31013|31014" default="" />
+  <setting id="download_dir" label="30102" type="folder" source="video" option="writable" />
+</settings>

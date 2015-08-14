@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+  <string id="30000">로그인 아이디</string>
+  <string id="30001">패스워드</string>
+  <string id="30100">화질</string>
+  <string id="30101">지역</string>
+  <string id="30102">다운로드 디렉토리</string>
+  <string id="30200">이전 페이지</string>
+  <string id="30201">다음 페이지</string>
+  <string id="30202">로그인 필요</string>
+  <string id="30203">유료컨텐츠를 보기 위해서는 로그인 정보가 필요합니다.</string>
+  <string id="30204">다운로드</string>
+  <string id="31000">중화질</string>
+  <string id="31001">저화질</string>
+  <string id="31002">고화질</string>
+  <string id="31003">모바일</string>
+  <string id="31010">호주,아시아</string>
+  <string id="31011">유럽,중동,인도</string>
+  <string id="31012">중남미</string>
+  <string id="31013">LA</string>
+  <string id="31014">뉴욕</string>
+</strings>

@@ -1,0 +1,68 @@
+0.4.4
+
+Changes
+- reflect video player change
+
+0.4.3
+
+Changes
+- reflect Login page change
+
+0.4.2
+
+Changes
+- remove high quality/mobile from settings
+- reflect Free flag change
+
+0.4.1
+
+Changes
+- reflect video url change (wmv -> mp4)
+
+0.4.0
+
+Changes
+- change plugin platform to xbmcswift2
+- add download menu and related setting
+
+0.3.2
+
+Changes
+- allow to use without setting
+
+0.3.1
+
+Changes
+- touch up a few messages
+
+0.3.0
+
+Changes
+- catch up Dabdate changes, including video redirection method
+- change server selection scheme.
+
+0.2.4
+
+Changes
+- more server list
+
+0.2.3
+
+Changes
+- Reflect site changes (server list)
+- ClientForm module is no more used
+
+0.2.0
+
+Changes
+- Direct play upon selection
+
+0.1.0
+
+Changes
+- possible to play streaming WMV from dabdate
+
+0.0.1
+
+Changes
+- Initial addon version

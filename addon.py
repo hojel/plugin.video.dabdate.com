@@ -4,10 +4,18 @@
 """
 from xbmcswift2 import Plugin, actions
 import os
-import resources.lib.dabdate as dabdate
+import json
 
 plugin = Plugin()
 _L = plugin.get_string
+
+plugin_path = plugin.addon.getAddonInfo('path')
+lib_path = os.path.join(plugin_path, 'resources', 'lib')
+sys.path.append(lib_path)
+
+import dabdate
+vidmap_path = os.path.join(plugin_path, 'resources', 'lib', dabdate.VIDEO_MAP_TABLE)
+vidmap = json.load(open(vidmap_path))
 
 qualcode = {
     ''        :'1',     # default
@@ -34,20 +42,26 @@ tNextPage = u"[B]%s>>[/B]" % _L(30201)
 def browse_page(url):
     quality = qualcode[ plugin.get_setting("quality", unicode) ]
     localsrv = localcode[ plugin.get_setting("local", unicode) ]
+    direct_play = plugin.get_setting("direct_play", bool)
     info = dabdate.parseTop( dabdate.root_url+url, quality=quality, localsrv=localsrv )
     items = []
     label_download = plugin.get_string(30204)
     for item in info['video']:
+        title = item['title']
+        vidurl = item['url']
+        if direct_play:
+            turl = dabdate.getDirectUrl(vidmap, item['title'], quality, localsrv)
+            if turl:
+                vidurl = turl
+                title = u"[I]%s[/I]"% item['title']
         if item['free']:
             title = u"[B]%s[/B]"% item['title']
-        else:
-            title = item['title']
         items.append({
             'label':title,
-            'path':plugin.url_for('play_video', url=item['url']),
+            'path':plugin.url_for('play_video', url=vidurl),
             'thumbnail':item['thumb'],
             'context_menu': [
-                (label_download, actions.background(plugin.url_for('download_video', url=item['url'])))
+                (label_download, actions.background(plugin.url_for('download_video', url=vidurl)))
             ]
         })
     # navigation
@@ -65,15 +79,22 @@ def browse_page(url):
 
 @plugin.route('/play/<url>')
 def play_video(url):
-    info = resolve_video_url(url)
-    vid_url = "{0:s}|User-Agent={1:s}&Cookie={2:s}".format(info['url'], info['useragent'], info['cookie'])
+    if url.startswith("http://vod"):
+        info = {"title":"Play"}
+        vid_url = url
+    else:
+        info = resolve_video_url(url)
+        vid_url = "{0:s}|User-Agent={1:s}&Cookie={2:s}".format(info['url'], info['useragent'], info['cookie'])
     # play video immediately
     plugin.play_video({'label':info['title'], 'path':vid_url, 'info_type':'video', 'is_playable':True})
     return plugin.finish(None, succeeded=False)
 
 @plugin.route('/download/<url>')
 def download_video(url):
-    info = resolve_video_url(url)
+    if url.startswith("http://vod"):
+        info = {"title":"Play", "url":url}
+    else:
+        info = resolve_video_url(url)
     wdir = plugin.get_setting('download_dir', unicode)
     ext = '.mp4'
     import xbmcvfs

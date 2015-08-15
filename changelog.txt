@@ -1,3 +1,9 @@
+0.5.0
+
+Changes
+- BeautifulSoup is used for parsing
+- local table to guess video URL from title
+
 0.4.4
 
 Changes

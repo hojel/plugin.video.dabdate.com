@@ -46,9 +46,9 @@ def parseTop( main_url, quality='1', localsrv='la'):
     # item list
     soup = BeautifulSoup(html, from_encoding="cp949")
     for title_node in soup.findAll("b", {"class":"big"}):
-    	node = title_node.findParent("tr").findParent("tr")
-    	title = title_node.string
-    	thumb = node.find("img")["src"]
+        node = title_node.findParent("tr").findParent("tr")
+        title = title_node.string
+        thumb = node.find("img")["src"]
         #video_id = RE_VIDEO_ID.search(node.find('a')['href']).group(1)
         video_id = RE_VIDEO_ID2.search(thumb).group(1)
         video_url = VIDEO_URL.format(vid=video_id, qual=quality, local=localsrv)

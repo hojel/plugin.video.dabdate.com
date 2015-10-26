@@ -3,6 +3,7 @@
   Dabdate - Korea Drama/TV Shows Streaming Service
 """
 from xbmcswift2 import Plugin, actions
+import xbmcvfs
 import os
 import json
 
@@ -13,9 +14,18 @@ plugin_path = plugin.addon.getAddonInfo('path')
 lib_path = os.path.join(plugin_path, 'resources', 'lib')
 sys.path.append(lib_path)
 
+vidmap = None
 import dabdate
-vidmap_path = os.path.join(plugin_path, 'resources', 'lib', dabdate.VIDEO_MAP_TABLE)
-vidmap = json.load(open(vidmap_path))
+vidmap_path = plugin.get_setting('vidmap_path', str)
+print vidmap_path
+if vidmap_path:
+    try:
+        f = xbmcvfs.File(vidmap_path)
+        vidmap = json.load(f)
+        f.close()
+        plugin.log.info("direct play is enabled with "+vidmap_path)
+    except:
+        vidmap = None
 
 qualcode = {
     ''        :'1',     # default
@@ -30,6 +40,7 @@ localcode = {
     _L(31012) :'sa',    # south america
     _L(31013) :'la',    # US west
     _L(31014) :'ny',    # US east
+    _L(31015) :'sg',    # singapore
 }
 
 CookiePath = os.path.join(plugin.storage_path, 'cookie.lwp')
@@ -49,7 +60,7 @@ def browse_page(url):
     for item in info['video']:
         title = item['title']
         vidurl = item['url']
-        if direct_play:
+        if direct_play and vidmap:
             turl = dabdate.getDirectUrl(vidmap, item['title'], quality, localsrv)
             if turl:
                 vidurl = turl
@@ -80,11 +91,10 @@ def browse_page(url):
 @plugin.route('/play/<url>')
 def play_video(url):
     if url.startswith("http://vod"):
-        info = {"title":"Play"}
-        vid_url = url
+        info = {"title":"Play", "url":url, "useragent":dabdate.PlayerAgent, "cookie":"player_link=OK"}
     else:
         info = resolve_video_url(url)
-        vid_url = "{0:s}|User-Agent={1:s}&Cookie={2:s}".format(info['url'], info['useragent'], info['cookie'])
+    vid_url = "{0:s}|User-Agent={1:s}&Cookie={2:s}".format(info['url'], info['useragent'], info['cookie'])
     # play video immediately
     plugin.play_video({'label':info['title'], 'path':vid_url, 'info_type':'video', 'is_playable':True})
     return plugin.finish(None, succeeded=False)
@@ -97,7 +107,6 @@ def download_video(url):
         info = resolve_video_url(url)
     wdir = plugin.get_setting('download_dir', unicode)
     ext = '.mp4'
-    import xbmcvfs
     if not xbmcvfs.exists(wdir):
         return plugin.finish(None, succeeded=False)
     wpath = wdir + info['title']+ext

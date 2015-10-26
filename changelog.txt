@@ -1,3 +1,14 @@
+0.5.3
+
+Changes
+- Direct Play feature is removed
+
+0.5.1
+
+Changes
+- Singapore is added in server list
+- Server names are rearranged
+
 0.5.0
 
 Changes

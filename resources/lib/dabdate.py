@@ -5,6 +5,8 @@ import os
 import re
 from bs4 import BeautifulSoup
 import json
+import base64
+import time
 
 root_url = "http://www.dabdate.com"
 RE_VIDEO_ID  = re.compile('idx=(\d+)')
@@ -12,23 +14,27 @@ RE_VIDEO_ID2 = re.compile('thumb/df_(\d+)\.jpg')
 VIDEO_URL    = "/player.php?idx={vid:s}&pr={qual:s}&local={local:s}"
 
 ###------ direct video link
+# 1444330841 -> 1444384446
 VIDEO_MAP_TABLE  = "vidmap.json"
-DIRECT_URL       = "http://vod{host:d}.dabdate.com/video2/{name:s}{mon:02d}{date:02d}-{bitrate:d}.mp4?@"
+DIRECT_URL       = "http://vod{host:d}.dabdate.com/link.php?f={arg:s}"
+DIRECT_ARG       = "{ts:d}||/video2/{name:s}{mon:02d}{date:02d}-{bitrate:d}.mp4||guest@"
 RE_DATE          = re.compile('(.*) \d{4},(\d{2}),(\d{2})')
 RE_EPISODE       = re.compile(u'(.*) (\d+|최종)회 *$')
 RE_SUBTITLE      = re.compile('(.+\S)\((.+?)\) *$')
 
 HOST_MAP = {
-    'au1' : 48,   # au(medium)
+    'au1' : 50,   # au(medium)
     'au2' : 48,   # au(low)
-    'eu1' : 33,   # eu(medium)
+    'eu1' : 43,   # eu(medium)
     'eu2' : 34,   # eu(low)
-    'sa1' : 53,   # sa(medium)
-    'sa2' : 54,   # sa(low)
+    'sg1' : 58,   # sg(medium)
+    'sg2' : 58,   # sg(low)
+    'sa1' : 54,   # sa(medium)
+    'sa2' : 53,   # sa(low)
     'la1' : 30,   # la(medium)
     'la2' : 31,   # la(low)
-    'ny1' : 53,   # ny(medium)
-    'ny2' : 55,   # ny(low)
+    'ny1' : 57,   # ny(medium)
+    'ny2' : 54,   # ny(low)
 }
 BITRATE_MAP = {
     '1' : 640,    # medium
@@ -74,11 +80,13 @@ def getDirectUrl( vidmap, title, quality='1', localsrv='la' ):
         if match: title2 = match.group(1)
 
     if title2 in vidmap:
-        return DIRECT_URL.format(host=HOST_MAP[localsrv+quality],
-                                 name=vidmap[title2],
-                                 mon=int(mon),
-                                 date=int(dt),
-                                 bitrate=BITRATE_MAP[quality])
+        arg = DIRECT_ARG.format(ts=int(time.time()),
+                                name=vidmap[title2],
+                                mon=int(mon),
+                                date=int(dt),
+                                bitrate=BITRATE_MAP[quality])
+        return DIRECT_URL.format(host=HOST_MAP[ localsrv+quality ],
+                                 arg=base64.b64encode(arg))
     return None
 
 def getStreamUrl( main_url, userid='', passwd='', cookiefile='cookie.lwp'):

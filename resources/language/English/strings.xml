@@ -2,10 +2,13 @@
 <strings>
   <string id="30000">Login name</string>
   <string id="30001">Password</string>
+  <string id="30002">General</string>
+  <string id="30003">Advanced</string>
   <string id="30100">Quality</string>
   <string id="30101">Local server</string>
   <string id="30102">Download directory</string>
   <string id="30103">Direct play</string>
+  <string id="30104">ID Map Path</string>
   <string id="30200">Previous Page</string>
   <string id="30201">Next Page</string>
   <string id="30202">Login required</string>
@@ -20,4 +23,5 @@
   <string id="31012">South America</string>
   <string id="31013">LA</string>
   <string id="31014">NY</string>
+  <string id="31015">Singapore</string>
 </strings>

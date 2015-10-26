@@ -2,10 +2,13 @@
 <strings>
   <string id="30000">로그인 아이디</string>
   <string id="30001">패스워드</string>
+  <string id="30002">일반</string>
+  <string id="30003">고급</string>
   <string id="30100">화질</string>
   <string id="30101">지역</string>
   <string id="30102">다운로드 디렉토리</string>
   <string id="30103">비디오 유추 플레이</string>
+  <string id="30104">ID맵 파일</string>
   <string id="30200">이전 페이지</string>
   <string id="30201">다음 페이지</string>
   <string id="30202">로그인 필요</string>
@@ -20,4 +23,5 @@
   <string id="31012">중남미</string>
   <string id="31013">LA</string>
   <string id="31014">뉴욕</string>
+  <string id="31015">싱가포르</string>
 </strings>
